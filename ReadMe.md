@@ -7,11 +7,11 @@ A project the allows you to quickly copy/paste Nginx config files with good defa
 For every domain you want to support:
 
 - Create a file in `/sites-available/` using the domain you with to support:
-  - Example: `/sites-available/mysite.com` or `/sites-available/admin.mysite.com`
-- Copy all the config from `/sites-available/DOMAIN.config` into your new file.
-- Find a replace `__DOMAIN.COM__` with the domain you with to support.
+  - Example: `/sites-available/mysite.com.conf` or `/sites-available/admin.mysite.com.conf`
+- Copy all the config from `/sites-available/DOMAIN.conf` into your new file.
+- Find and replace `__DOMAIN.COM__` with the domain you with to support.
 - To active the site, create an empty file with the same name in the `/sites-enabled/` directory:
-  - Example: `/sites-available/mysite.com` with config and `/sites-enabled/mysite.com` as an empty file
+  - Example: `/sites-available/mysite.com.conf` with config and `/sites-enabled/mysite.com.conf` as an empty file
 - Restart your nginx server.
 
 ## Copy Checklist
