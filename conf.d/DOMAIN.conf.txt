@@ -10,11 +10,11 @@ server {
     ssl_trusted_certificate /etc/letsencrypt/live/__DOMAIN.COM__/chain.pem;
 
     # security
-    include                 nginx_settings/security.conf;
+    include                 /etc/nginx/nginx_settings/security.conf;
 
     # logging
-    access_log              /var/log/nginx/__DOMAIN.COM__.access.log;
-    error_log               /var/log/nginx/__DOMAIN.COM__.error.log warn;
+    # access_log              /var/log/nginx/__DOMAIN.COM__.access.log;
+    # error_log               /var/log/nginx/__DOMAIN.COM__.error.log warn;
 
     # index.html fallback
     location / {
@@ -24,12 +24,11 @@ server {
     # reverse proxy
     location /api {
         proxy_pass            http://__APPLICATION__:__PORT__;
-        proxy_set_header Host $host;
-        include               nginx_settings/proxy.conf;
+        include               /etc/nginx/nginx_settings/proxy.conf;
     }
 
     # additional config
-    include nginx_settings/general.conf;
+    include /etc/nginx/nginx_settings/general.conf;
 }
 
 # subdomains redirect
@@ -50,8 +49,13 @@ server {
     listen      80;
     listen      [::]:80;
     server_name .__DOMAIN.COM__;
-    include     nginx_settings/letsencrypt.conf;
 
+    # ACME-challenge
+    location ^~ /.well-known/acme-challenge/ {
+        root /var/www/_letsencrypt;
+    }
+
+    # redirect to https
     location / {
         return 301 https://__DOMAIN.COM__$request_uri;
     }
